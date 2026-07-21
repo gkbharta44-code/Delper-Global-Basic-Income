@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Perpetual Loop — Hybrid Global Basic Income Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDEAE1;
+    --paper-dim:#E2DED2;
+    --ink:#16233D;
+    --ink-soft:#4A5670;
+    --line:#C9C3B2;
+    --accent:#2F6F5E;
+    --accent-soft:#DCE6DE;
+    --gold:#A8763E;
+    --red:#8C3B34;
+    --tier1:#2F6F5E;
+    --tier2:#3E7CA6;
+    --tier3:#A8763E;
+    --tier4:#8C3B34;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+  }
+  ::selection{background:var(--accent); color:var(--paper);}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  h1,h2,h3{font-family:'Fraunces',serif; font-weight:600; margin:0;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-size:12px;
+    color:var(--accent);
+    font-weight:700;
+  }
+
+  /* HERO */
+  header.hero{
+    padding:96px 0 72px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:56px;
+    align-items:end;
+  }
+  h1.title{
+    font-size:clamp(40px,5.5vw,68px);
+    line-height:1.03;
+    letter-spacing:-0.01em;
+    margin-top:14px;
+  }
+  h1.title em{
+    font-style:italic;
+    color:var(--accent);
+  }
+  .hero-sub{
+    max-width:52ch;
+    color:var(--ink-soft);
+    font-size:17px;
+    margin-top:20px;
+  }
+  .loop-diagram{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--ink);
+    border:1px solid var(--line);
+    background:var(--paper-dim);
+    padding:22px 22px;
+    border-radius:2px;
+  }
+  .loop-diagram .step{
+    display:flex; justify-content:space-between; gap:12px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .loop-diagram .step:last-child{border-bottom:none;}
+  .loop-diagram .step b{color:var(--accent); font-weight:700;}
+  .loop-diagram .arrow{text-align:center; color:var(--ink-soft); padding:2px 0; font-size:11px;}
+
+  /* SECTION GENERAL */
+  section{padding:64px 0; border-bottom:1px solid var(--line);}
+  section .eyebrow{margin-bottom:10px; display:block;}
+  h2.section-title{font-size:clamp(26px,3.4vw,36px); max-width:22ch; margin-bottom:8px;}
+  .section-lede{color:var(--ink-soft); max-width:64ch; font-size:15.5px; margin-bottom:36px;}
+
+  /* THREE LAYER CARDS */
+  .layers{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .layer{background:var(--paper); padding:30px 26px;}
+  .layer .num{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft); letter-spacing:0.08em;}
+  .layer h3{font-size:21px; margin:10px 0 12px; line-height:1.15;}
+  .layer p{font-size:14.5px; color:var(--ink-soft); margin:0 0 14px;}
+  .layer .fig{
+    font-family:'JetBrains Mono',monospace;
+    font-size:26px; font-weight:700; color:var(--accent);
+    display:block; margin-bottom:4px;
+  }
+  .layer .fig-label{font-size:12px; color:var(--ink-soft); font-family:'JetBrains Mono',monospace;}
+  .layer.floor .fig{color:var(--tier1);}
+  .layer.attention .fig{color:var(--tier3);}
+  .layer.wage .fig{color:var(--tier2);}
+
+  /* REALITY CHECK BOX */
+  .reality{
+    background:#F4EDE3;
+    border:1px solid var(--gold);
+    border-left:4px solid var(--gold);
+    padding:26px 28px;
+    margin-top:36px;
+  }
+  .reality h4{font-family:'JetBrains Mono',monospace; text-transform:uppercase; font-size:12px; letter-spacing:0.1em; color:var(--gold); margin-bottom:12px;}
+  .reality p{font-size:14.5px; color:var(--ink); margin:0 0 10px;}
+  .reality p:last-child{margin-bottom:0;}
+  .reality .stat-row{display:flex; gap:28px; flex-wrap:wrap; margin:16px 0;}
+  .reality .stat{font-family:'JetBrains Mono',monospace;}
+  .reality .stat b{display:block; font-size:22px; color:var(--red);}
+  .reality .stat span{font-size:11.5px; color:var(--ink-soft);}
+
+  /* CALCULATOR */
+  .calc-box{
+    background:#1B2A3D;
+    color:var(--paper);
+    padding:32px 30px;
+    margin-top:36px;
+    border-radius:2px;
+  }
+  .calc-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px 32px; margin-bottom:28px;}
+  .calc-control label{
+    display:block; font-family:'JetBrains Mono',monospace; font-size:12.5px;
+    color:#C9D3DE; margin-bottom:10px;
+  }
+  .calc-control label span{color:#7FD8B8; font-weight:700;}
+  .calc-control input[type="range"]{
+    width:100%; appearance:none; height:4px; background:#3A4A62; border-radius:2px; outline:none;
+  }
+  .calc-control input[type="range"]::-webkit-slider-thumb{
+    appearance:none; width:16px; height:16px; border-radius:50%;
+    background:#7FD8B8; cursor:pointer; border:2px solid #1B2A3D;
+  }
+  .calc-control input[type="range"]::-moz-range-thumb{
+    width:16px; height:16px; border-radius:50%; background:#7FD8B8; cursor:pointer; border:2px solid #1B2A3D;
+  }
+  .calc-results{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:#3A4A62; border:1px solid #3A4A62; margin-bottom:18px;
+  }
+  .calc-result{background:#1B2A3D; padding:16px 18px; display:flex; flex-direction:column; gap:6px;}
+  .calc-result.highlight{background:#24405C;}
+  .calc-label{font-family:'JetBrains Mono',monospace; font-size:11px; color:#9AAABF; text-transform:uppercase; letter-spacing:0.05em;}
+  .calc-value{font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:700; color:#7FD8B8;}
+  .calc-result.highlight .calc-value{color:#F2C879; font-size:26px;}
+  .calc-note{font-size:13px; color:#9AAABF; margin:0; max-width:80ch;}
+  .reverse-solver{border-top:1px solid #3A4A62; padding-top:8px;}
+  .solve-toggle{display:flex; gap:8px;}
+  .solve-btn{
+    font-family:'Inter',sans-serif; font-size:13px; padding:9px 14px;
+    background:#243447; color:#C9D3DE; border:1px solid #3A4A62; border-radius:2px; cursor:pointer;
+  }
+  .solve-btn.active{background:#7FD8B8; color:#1B2A3D; border-color:#7FD8B8; font-weight:600;}
+  @media (max-width:700px){
+    .calc-grid{grid-template-columns:1fr;}
+    .calc-results{grid-template-columns:1fr;}
+  }
+
+  /* PILLARS */
+  .pillars{display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:36px;}
+  .pillar{background:var(--paper); padding:22px 18px;}
+  .pillar .pct{font-family:'JetBrains Mono',monospace; font-size:28px; font-weight:700; color:var(--accent); display:block;}
+  .pillar h4{font-size:15px; margin:8px 0 6px; line-height:1.2;}
+  .pillar p{font-size:12.5px; color:var(--ink-soft); margin:0;}
+
+  .region-strategy{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:36px;}
+  .rstrat{background:var(--paper); padding:22px 22px;}
+  .rstrat .eyebrow{font-size:11px;}
+  .rstrat h4{font-size:16px; margin:8px 0 8px;}
+  .rstrat p{font-size:13.5px; color:var(--ink-soft); margin:0;}
+
+  /* TIMELINE */
+  .phases{border-left:2px solid var(--accent); margin-left:8px; padding-left:0;}
+  .phase{position:relative; padding:0 0 32px 30px;}
+  .phase:last-child{padding-bottom:0;}
+  .phase::before{content:''; position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--accent); border:2px solid var(--paper);}
+  .phase .yrs{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent); font-weight:700; letter-spacing:0.05em;}
+  .phase h4{font-size:19px; margin:6px 0 8px;}
+  .phase p{font-size:14px; color:var(--ink-soft); margin:0 0 4px;}
+  .phase p b{color:var(--ink);}
+
+  /* GCL PLATFORM */
+  .gcl-layers{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:36px;}
+  .gcl-layer{background:var(--paper); padding:22px 22px;}
+  .gcl-layer .num{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-soft);}
+  .gcl-layer h4{font-size:16.5px; margin:6px 0 8px;}
+  .gcl-layer p{font-size:13.5px; color:var(--ink-soft); margin:0;}
+
+  .dashboard-mock{
+    font-family:'JetBrains Mono',monospace; font-size:13px;
+    background:var(--paper-dim); border:1px solid var(--line); padding:20px 22px;
+    margin-bottom:32px; color:var(--ink);
+  }
+  .dashboard-mock .dline{padding:6px 0; border-bottom:1px dashed var(--line); display:flex; justify-content:space-between; gap:16px;}
+  .dashboard-mock .dline:last-child{border-bottom:none;}
+  .dashboard-mock .dline span:first-child{color:var(--ink-soft);}
+  .bar{display:inline-block; width:120px; height:8px; background:var(--line); position:relative; vertical-align:middle; margin-left:8px;}
+  .bar::after{content:''; position:absolute; left:0; top:0; height:100%; width:60%; background:var(--accent);}
+
+  .guardrails{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .guard{background:var(--paper); padding:20px 20px;}
+  .guard h4{font-size:14.5px; margin:0 0 8px;}
+  .guard p{font-size:13px; color:var(--ink-soft); margin:0;}
+
+  @media (max-width:860px){
+    .pillars{grid-template-columns:1fr 1fr;}
+    .region-strategy{grid-template-columns:1fr;}
+    .gcl-layers{grid-template-columns:1fr;}
+    .guardrails{grid-template-columns:1fr;}
+  }
+
+  /* TABLE / EXPLORER */
+  .controls{
+    display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px;
+    align-items:center;
+  }
+  .controls input, .controls select{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    padding:10px 14px;
+    border:1px solid var(--line);
+    background:var(--paper-dim);
+    color:var(--ink);
+    border-radius:2px;
+  }
+  .controls input:focus, .controls select:focus{outline:2px solid var(--accent); outline-offset:1px;}
+  .controls input{flex:1; min-width:180px;}
+  .tier-legend{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px; font-size:12.5px; font-family:'JetBrains Mono',monospace; color:var(--ink-soft);}
+  .tier-legend .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; vertical-align:middle;}
+  .count-line{font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink-soft); margin-bottom:14px;}
+
+  table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  thead th{
+    text-align:left;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.07em;
+    color:var(--ink-soft);
+    padding:10px 12px;
+    border-bottom:2px solid var(--ink);
+    cursor:pointer;
+    user-select:none;
+    white-space:nowrap;
+  }
+  thead th:hover{color:var(--accent);}
+  tbody td{padding:9px 12px; border-bottom:1px solid var(--line);}
+  tbody tr:hover{background:var(--paper-dim);}
+  .tier-badge{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700;
+  }
+  .tier-badge .dot{width:8px; height:8px; border-radius:50%;}
+  .t1 .dot,.tier-legend .t1{background:var(--tier1);}
+  .t2 .dot,.tier-legend .t2{background:var(--tier2);}
+  .t3 .dot,.tier-legend .t3{background:var(--tier3);}
+  .t4 .dot,.tier-legend .t4{background:var(--tier4);}
+  .region-tag{font-size:11.5px; color:var(--ink-soft);}
+  #table-wrap{max-height:640px; overflow-y:auto; border:1px solid var(--line);}
+  #table-wrap thead{position:sticky; top:0; background:var(--paper); z-index:2;}
+
+  footer{padding:48px 0 80px;}
+  footer p{color:var(--ink-soft); font-size:13.5px; max-width:70ch;}
+  footer .caveat{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-soft); border-top:1px dashed var(--line); padding-top:20px; margin-top:28px;}
+
+  @media (max-width:1000px){
+    .layers{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .layers{grid-template-columns:1fr;}
+    .wrap{padding:0 20px;}
+  }
+
+  /* TIER BASKET TABLE */
+  .basket-table{width:100%; border-collapse:collapse; font-size:14px; margin-bottom:24px;}
+  .basket-table th{
+    text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase;
+    letter-spacing:0.06em; color:var(--ink-soft); padding:10px 14px; border-bottom:2px solid var(--ink);
+  }
+  .basket-table td{padding:12px 14px; border-bottom:1px solid var(--line);}
+  .basket-table tr:last-child td{border-bottom:2px solid var(--ink); font-weight:600;}
+  .basket-table .num{font-family:'JetBrains Mono',monospace;}
+  .weighted-result{
+    display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+    background:var(--accent-soft); border:1px solid var(--accent); padding:22px 26px; margin-bottom:20px;
+  }
+  .weighted-result .big{font-family:'JetBrains Mono',monospace; font-size:34px; font-weight:700; color:var(--accent);}
+  .weighted-result .desc{font-size:14px; color:var(--ink-soft); max-width:50ch;}
+  .apply-btn{
+    font-family:'JetBrains Mono',monospace; font-size:13px; padding:11px 18px;
+    background:var(--ink); color:var(--paper); border:none; border-radius:2px; cursor:pointer;
+    text-transform:uppercase; letter-spacing:0.05em;
+  }
+  .apply-btn:hover{background:var(--accent);}
+
+  /* SKILL LADDER */
+  .skill-ladder{border-left:2px solid var(--accent); margin-left:8px; margin-bottom:36px;}
+  .skill-rung{position:relative; padding:0 0 26px 30px;}
+  .skill-rung:last-child{padding-bottom:0;}
+  .skill-rung::before{content:''; position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--accent); border:2px solid var(--paper);}
+  .skill-rung .rung-head{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px;}
+  .skill-rung h4{font-size:18px; margin:0;}
+  .skill-rung .wage{font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:var(--accent);}
+  .skill-rung .meta{font-size:12.5px; color:var(--ink-soft); font-family:'JetBrains Mono',monospace; margin-top:4px;}
+
+  .career-sim{background:#1B2A3D; color:var(--paper); padding:28px 30px; margin-bottom:36px;}
+  .career-sim h4{font-family:'JetBrains Mono',monospace; text-transform:uppercase; font-size:12px; letter-spacing:0.1em; color:#7FD8B8; margin-bottom:18px;}
+  .career-sim .calc-control label{color:#C9D3DE; font-family:'JetBrains Mono',monospace; font-size:12.5px; display:block; margin-bottom:10px;}
+  .career-sim .calc-control label span{color:#7FD8B8; font-weight:700;}
+  .career-sim input[type="range"]{width:100%; appearance:none; height:4px; background:#3A4A62; border-radius:2px; outline:none; margin-bottom:22px;}
+  .career-sim input[type="range"]::-webkit-slider-thumb{appearance:none; width:16px; height:16px; border-radius:50%; background:#7FD8B8; cursor:pointer; border:2px solid #1B2A3D;}
+  .career-track{display:flex; gap:2px; margin-bottom:16px;}
+  .career-track .seg{flex:1; height:8px; background:#3A4A62; border-radius:2px;}
+  .career-track .seg.filled{background:#7FD8B8;}
+  .career-track .seg.current{background:#F2C879;}
+  .career-results{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:#3A4A62; border:1px solid #3A4A62;}
+  .career-result{background:#1B2A3D; padding:16px 18px;}
+  .career-result .clabel{font-family:'JetBrains Mono',monospace; font-size:11px; color:#9AAABF; text-transform:uppercase; display:block; margin-bottom:6px;}
+  .career-result .cvalue{font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#F2C879;}
+  @media (max-width:700px){ .career-results{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Illustrative Policy Model — Not Financial or Legal Advice</span>
+      <h1 class="title">The Perpetual <em>Loop.</em></h1>
+      <p class="hero-sub">A hybrid Global Basic Income model in which automated production, human wages, and a
+      third "attention layer" — earnings from watching ads and completing surveys — feed a single circulating
+      fund. Workers and non-workers alike consume what the system produces; that spending becomes next year's
+      dividend and wage pool.</p>
+    </div>
+    <div class="loop-diagram">
+      <div class="step"><span><b>00</b> Delper</span><span>owns infra · sets 10% p.a. rent · holds veto</span></div>
+      <div class="arrow">↓ leases capacity to</div>
+      <div class="step"><span><b>01</b> Global cooperative</span><span>rents infra, runs production + ad inventory</span></div>
+      <div class="arrow">↓ pays 10%/yr rent to Delper, surplus funds</div>
+      <div class="step"><span><b>02</b> Dividend + attention income</span><span>paid to all 6B cooperative members</span></div>
+      <div class="arrow">↓ funds</div>
+      <div class="step"><span><b>03</b> Wages</span><span>paid for chosen labor</span></div>
+      <div class="arrow">↓ combine</div>
+      <div class="step"><span><b>04</b> Total household income</span><span>~$41T / year (net of rent)</span></div>
+      <div class="arrow">↓ spent on</div>
+      <div class="step"><span><b>05</b> Goods, services, media</span><span>generates cooperative + ad revenue</span></div>
+      <div class="arrow">↑ pays next cycle's rent + dividend — loop repeats</div>
+    </div>
+  </div>
+</header>
+
+<section id="layers">
+  <div class="wrap">
+    <span class="eyebrow">The Model</span>
+    <h2 class="section-title">Three income layers, one circulating fund</h2>
+    <p class="section-lede">Each layer is justified differently — cooperative membership, attention, or labor —
+    so the system doesn't require everyone to hold a job, but still rewards work and keeps a funding link to real
+    economic activity rather than printing money from nothing. Note the ownership structure: <b>Delper owns the
+    underlying infrastructure</b> (factories, robotics, AI compute, data centers) and leases capacity to the
+    global cooperative. The cooperative — not Delper — collects production and ad revenue, pays Delper rent for
+    infrastructure use, and distributes what's left as Layer 1 and Layer 2 income to its 6 billion members. This
+    is a landlord/tenant relationship, not shared equity — a distinction that matters for who bears the risk of a
+    bad year and who captures the upside of a good one.</p>
+
+    <div class="layers">
+      <div class="layer floor">
+        <span class="num">Layer 0 / Guarantee</span>
+        <h3>Universal Basic Services</h3>
+        <span class="fig">5 categories</span>
+        <span class="fig-label">food · clothing · shelter · medical · skilled education</span>
+        <p>Delivered in-kind to every member unconditionally, off the top of gross output — before rent or wages
+        are calculated. Doesn't depend on the cash loop closing, but it does compete with Delper's rent for the
+        same pool of output. See the live threshold in the calculator below.</p>
+      </div>
+      <div class="layer floor" style="border-top:3px solid var(--tier1);">
+        <span class="num">Layer 1 / Floor</span>
+        <h3>Cooperative Cash Dividend</h3>
+        <span class="fig">$12T</span>
+        <span class="fig-label">/ year · residual after Layer 0 + rent + wages</span>
+        <p>What's left of the cooperative's net surplus after Delper's rent and the Layer 0 basket are paid —
+        distributed as cash. This is the layer that goes to zero first when rent rises or the basket grows;
+        Layer 0 is protected, this one isn't.</p>
+      </div>
+      <div class="layer attention">
+        <span class="num">Layer 2 / Supplement</span>
+        <h3>Attention Income</h3>
+        <span class="fig">~$0.3–0.6T</span>
+        <span class="fig-label">/ year · realistic ceiling, see reality check below</span>
+        <p>Micro-payments for watching ads and completing surveys, funded directly by advertiser and market-research
+        spend rather than the trust. Useful as a top-up and an on-ramp for people without formal banking access —
+        not a substitute for the other two layers.</p>
+      </div>
+      <div class="layer wage">
+        <span class="num">Layer 3 / Ceiling</span>
+        <h3>Chosen-Labor Wages</h3>
+        <span class="fig">~$29T</span>
+        <span class="fig-label">/ year · market-priced, ~3–4B working-age participants</span>
+        <p>Ordinary wages across healthcare, education, science, care work, automation maintenance, and any
+        sector machines can't easily replace. This is the layer that rewards skill and effort.</p>
+      </div>
+    </div>
+
+    <div class="reality">
+      <h4>Reality check — why Layer 2 can't be a third of the loop</h4>
+      <p>Global advertising spend across every channel (TV, digital, print, out-of-home) totals roughly $1
+      trillion a year worldwide, and market-research budgets add a small fraction more. That entire industry —
+      every ad shown to every person on earth — is smaller than one-tenth of the $41T target.</p>
+      <div class="stat-row">
+        <div class="stat"><b>~$1T</b><span>Total global ad spend / yr, all media</span></div>
+        <div class="stat"><b>~$700B</b><span>Digital share of that spend</span></div>
+        <div class="stat"><b>~$0.30–0.60T</b><span>Realistic ceiling if a large share were redirected to a user fund</span></div>
+        <div class="stat"><b>&lt;2%</b><span>Of the $41T target this layer could plausibly cover</span></div>
+      </div>
+      <p>Redirecting even 40–50% of all global ad spend into a user-payout pool — a radical restructuring of the
+      entire advertising industry, since publishers, agencies, and production still need to be paid — would
+      generate on the order of $0.3–0.6T/year. Divided across 6 billion people that's roughly $50–100/year each:
+      a genuinely useful supplement (data costs, phone credit, small discretionary spend) but nowhere near a
+      living floor on its own. It works best as bootstrapping income in Tier 3/4 countries before dividend and
+      wage infrastructure exists, and as a way to fund the digital ID/banking rollout itself.</p>
+    </div>
+    <div class="reality" style="margin-top:36px; border-color:var(--red); background:#F3E7E4;">
+      <h4 style="color:var(--red);">Rent &amp; governance terms — what 10% + veto actually does to the loop</h4>
+      <p>Two new terms were set: Delper charges <b>10% per annum</b> on infrastructure value, and Delper holds
+      <b>veto</b> over the cooperative. Both change the math and the power balance, not just the paperwork.</p>
+
+      <p><b>The rent math.</b> Producing ~$41T/year of goods needs a large base of factories, robotics, and AI
+      compute behind it. Using a typical capital-to-output ratio for capital-intensive manufacturing (~2–2.5x),
+      that infrastructure is worth roughly $85–100T. At 10%/year, rent alone is:</p>
+      <div class="stat-row">
+        <div class="stat"><b>~$9–10T</b><span>Rent owed to Delper / year</span></div>
+        <div class="stat"><b>~$50–51T</b><span>Gross output the cooperative must generate to still net $41T for people</span></div>
+        <div class="stat"><b>~9–10 yrs</b><span>Time for Delper to recover the full infra value in rent alone</span></div>
+        <div class="stat"><b>~3–4x</b><span>Total rent collected vs. infra value over a 30-year horizon</span></div>
+      </div>
+      <p>10%/year is a high rate for infrastructure specifically — real-world infrastructure funds typically
+      target 6–10% <i>total return</i> (rent plus eventual resale or depreciation credit) over the life of an
+      asset, not a flat 10% of value paid out every single year on top of that. A flat 10%/year in perpetuity
+      means Delper collects the equivalent of the entire infrastructure's value roughly every decade, indefinitely.
+      Either global production has to grow ~20–25% larger than the $41T target just to cover rent, or the $12T
+      dividend layer absorbs most of that cost and shrinks toward $2–3T — closer to $350–500/person/year instead
+      of $2,000.</p>
+
+      <p><b>The veto.</b> Structurally, veto sitting with Delper rather than the cooperative means the 10% rate —
+      and any future rate change — isn't something members can renegotiate through governance; it's set
+      unilaterally by the party being paid. That's the exact concentration risk flagged earlier, now made
+      concrete: whoever sets the rent controls the size of the dividend, and here that's Delper, not the
+      cooperative. This is a workable business arrangement (a landlord charging a lease rate and holding
+      approval rights is normal in commercial real estate and infrastructure finance), but it functions as an
+      extraction point rather than a mutual-benefit cooperative unless the rate is renegotiable or the
+      cooperative holds some counterbalancing right — a rent cap, a sunset clause, or co-veto on rate changes.</p>
+    </div>
+
+    <div class="reality" style="margin-top:0; margin-bottom:36px;">
+      <h4>Why one flat number was the weakest assumption in this model</h4>
+      <p>Food, healthcare, and education costs vary enormously by region — a basket priced for Norway is
+      unaffordable to deliver globally at that rate, and a basket priced for a low-income region would be an
+      inadequate standard for a wealthy one. Below, basket cost is set per readiness tier (using the same 234-country
+      tiers from the rollout explorer earlier) and weighted by each tier's rough population share, rather than
+      picking one global figure.</p>
+    </div>
+
+    <table class="basket-table">
+      <thead>
+        <tr><th>Tier</th><th>Illustrative basket cost</th><th>Pop. share</th><th>Population</th><th>Weighted contribution</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Tier 1 — First movers</td><td class="num">$4,000/yr</td><td class="num">12%</td><td class="num">0.72B</td><td class="num">$480</td></tr>
+        <tr><td>Tier 2 — Fast followers (incl. China, India, Indonesia, Brazil)</td><td class="num">$1,800/yr</td><td class="num">55%</td><td class="num">3.30B</td><td class="num">$990</td></tr>
+        <tr><td>Tier 3 — Infrastructure-first</td><td class="num">$900/yr</td><td class="num">28%</td><td class="num">1.68B</td><td class="num">$252</td></tr>
+        <tr><td>Tier 4 — Fragile / interim</td><td class="num">$500/yr</td><td class="num">5%</td><td class="num">0.30B</td><td class="num">$25</td></tr>
+        <tr><td colspan="4">Population-weighted global average</td><td class="num" style="color:var(--accent); font-size:16px;">$1,747/yr</td></tr>
+      </tbody>
+    </table>
+
+    <div class="weighted-result">
+      <div>
+        <span class="big">$1,747</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-soft);"> /person/year</span>
+      </div>
+      <div class="desc">$320 below the $2,067 permanent-unpayable threshold at current output/wage settings — a
+      real but thin 15% margin, not a comfortable one. Tier population shares here are rough estimates for
+      modeling purposes, not sourced demographic data.</div>
+      <button class="apply-btn" onclick="applyWeightedBasket()">Apply to calculator ↓</button>
+    </div>
+
+    <div class="calc-box" id="calcBox">
+      <h4 style="font-family:'JetBrains Mono',monospace; text-transform:uppercase; font-size:12px; letter-spacing:0.1em; color:var(--accent); margin-bottom:18px;">Live calculator — test the rent terms</h4>
+      <div class="calc-grid">
+        <div class="calc-control">
+          <label for="rentRate">Delper rent rate <span id="rentRateVal">10%</span> / year</label>
+          <input type="range" id="rentRate" min="0" max="20" step="0.5" value="10">
+        </div>
+        <div class="calc-control">
+          <label for="infraVal">Infrastructure value <span id="infraValVal">$92T</span></label>
+          <input type="range" id="infraVal" min="50" max="150" step="1" value="92">
+        </div>
+        <div class="calc-control">
+          <label for="grossOut">Gross cooperative output <span id="grossOutVal">$41T</span> / year</label>
+          <input type="range" id="grossOut" min="35" max="65" step="0.5" value="41">
+        </div>
+        <div class="calc-control">
+          <label for="attnLayer">Attention layer contribution <span id="attnLayerVal">$0.4T</span> / year</label>
+          <input type="range" id="attnLayer" min="0" max="1" step="0.05" value="0.4">
+        </div>
+        <div class="calc-control">
+          <label for="ubsBasket">Layer 0 — Universal Basic Services <span id="ubsBasketVal">$1,500</span> / person / year</label>
+          <input type="range" id="ubsBasket" min="0" max="5000" step="50" value="1500">
+        </div>
+      </div>
+      <p class="calc-note" style="margin-bottom:8px;">Layer 0 guarantees five categories in-kind, unconditionally, to
+      every member — <b>food, clothing, shelter, medical care, and skilled education</b> — provisioned directly from
+      gross output before rent or wages are calculated. It's not contingent on the cash loop closing. A basket
+      covering all five globally is realistically priced well above food+shelter alone once healthcare and
+      education are included — likely $2,000–4,000+/person/year for genuine coverage, not the $1,500 placeholder
+      shown by default.</p>
+      <p class="calc-note" style="margin-bottom:20px; color:#F2C879;" id="ubsThresholdNote"></p>
+      <div class="calc-results">
+        <div class="calc-result"><span class="calc-label">Layer 0 · UBS basket (guaranteed)</span><span class="calc-value" id="ubsOwed" style="color:#F2C879;">—</span></div>
+        <div class="calc-result"><span class="calc-label">Rent owed to Delper</span><span class="calc-value" id="rentOwed">—</span></div>
+        <div class="calc-result"><span class="calc-label">Net pool for dividend + wages</span><span class="calc-value" id="netPool">—</span></div>
+        <div class="calc-result"><span class="calc-label">Wage layer (fixed target)</span><span class="calc-value" id="wageLayer">—</span></div>
+        <div class="calc-result"><span class="calc-label">Dividend layer (residual, cash)</span><span class="calc-value" id="dividendLayer">—</span></div>
+        <div class="calc-result highlight"><span class="calc-label">Per-person cash dividend / year</span><span class="calc-value" id="perPerson">—</span></div>
+        <div class="calc-result"><span class="calc-label">Years for Delper to recover infra value</span><span class="calc-value" id="recoverYrs">—</span></div>
+      </div>
+      <p class="calc-note">Wage layer target held fixed at $29T (Layer 3 from the model above); whatever remains
+      after rent and wages becomes the dividend pool, split across 6 billion members plus the attention layer.
+      If rent exceeds the net pool, the dividend goes negative — meaning the cooperative can't cover both wages
+      and rent from a $41T base, and either output or the rent rate has to give.</p>
+
+      <div class="reverse-solver">
+        <h4 style="font-family:'JetBrains Mono',monospace; text-transform:uppercase; font-size:12px; letter-spacing:0.1em; color:#7FD8B8; margin:28px 0 16px;">Reverse solver — work backward from a target dividend</h4>
+        <div class="calc-grid" style="margin-bottom:20px;">
+          <div class="calc-control">
+            <label for="targetDiv">Target per-person dividend <span id="targetDivVal">$6,833</span> / year</label>
+            <input type="range" id="targetDiv" min="0" max="8000" step="50" value="6833">
+          </div>
+          <div class="calc-control">
+            <label>Solve for</label>
+            <div class="solve-toggle">
+              <button type="button" class="solve-btn active" data-mode="rent">Required rent rate</button>
+              <button type="button" class="solve-btn" data-mode="output">Required gross output</button>
+            </div>
+          </div>
+        </div>
+        <div class="calc-results" style="grid-template-columns:repeat(2,1fr);">
+          <div class="calc-result highlight"><span class="calc-label" id="solverLabel">Required rent rate</span><span class="calc-value" id="solverValue">—</span></div>
+          <div class="calc-result"><span class="calc-label">Holding constant</span><span class="calc-value" id="solverHeld" style="font-size:15px;">—</span></div>
+        </div>
+        <p class="calc-note" id="solverNote"></p>
+      </div>
+
+      <div class="recovery-sim">
+        <h4 style="font-family:'JetBrains Mono',monospace; text-transform:uppercase; font-size:12px; letter-spacing:0.1em; color:#7FD8B8; margin:28px 0 6px;">Recovery simulator — runs on the sliders above</h4>
+        <p class="calc-note" style="margin-bottom:16px;">Simulates year-by-year using the current rent rate, infra value,
+        output, attention-layer, and Layer 0 sliders held constant. The UBS basket comes off the top first and is
+        delivered every year regardless of outcome — it never appears in this table because it's not part of the
+        cash loop being tested. What's shown below is only the cash rent/dividend mechanics on top of that
+        guaranteed basket. If the operating surplus (output − UBS − wages + attention layer) can't cover a year's
+        rent, the shortfall defers and compounds at the rent rate until there's room to catch up.</p>
+
+        <div class="calc-results" style="grid-template-columns:repeat(3,1fr); margin-bottom:16px;">
+          <div class="calc-result highlight"><span class="calc-label">Investment recovered</span><span class="calc-value" id="simRecoveredYear">—</span></div>
+          <div class="calc-result"><span class="calc-label">Deferral years hit</span><span class="calc-value" id="simDeferralYears">—</span></div>
+          <div class="calc-result"><span class="calc-label">Total collected vs. $92T principal</span><span class="calc-value" id="simTotalCollected">—</span></div>
+        </div>
+        <p class="calc-note" id="simSummaryNote" style="margin-bottom:16px;"></p>
+
+        <div id="simTableWrap" style="max-height:280px; overflow-y:auto; border:1px solid #3A4A62;">
+          <table id="simTable" style="width:100%; border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:12px;">
+            <thead style="position:sticky; top:0; background:#1B2A3D;">
+              <tr>
+                <th style="text-align:left; padding:8px 10px; color:#9AAABF; border-bottom:1px solid #3A4A62;">Year</th>
+                <th style="text-align:left; padding:8px 10px; color:#9AAABF; border-bottom:1px solid #3A4A62;">Rent Due</th>
+                <th style="text-align:left; padding:8px 10px; color:#9AAABF; border-bottom:1px solid #3A4A62;">Paid</th>
+                <th style="text-align:left; padding:8px 10px; color:#9AAABF; border-bottom:1px solid #3A4A62;">Deferred Bal.</th>
+                <th style="text-align:left; padding:8px 10px; color:#9AAABF; border-bottom:1px solid #3A4A62;">Dividend/person</th>
+                <th style="text-align:left; padding:8px 10px; color:#9AAABF; border-bottom:1px solid #3A4A62;">Cumulative Paid</th>
+              </tr>
+            </thead>
+            <tbody id="simTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="explorer">
+  <div class="wrap">
+    <span class="eyebrow">Rollout Model</span>
+    <h2 class="section-title">234 countries &amp; territories, tiered by readiness</h2>
+    <p class="section-lede">Tier assignment is an illustrative categorization for modeling purposes — grouped by
+    general fiscal capacity, digital ID/banking coverage, and institutional stability — not a sourced index.
+    Pilot and rollout years are modeled targets, not commitments or predictions.</p>
+
+    <div class="tier-legend">
+      <span><span class="dot t1"></span>Tier 1 — First movers (pilot 2027, floor by 2030)</span>
+      <span><span class="dot t2"></span>Tier 2 — Fast followers (pilot 2030, floor by 2035)</span>
+      <span><span class="dot t3"></span>Tier 3 — Infrastructure-first (pilot 2036, floor by 2043)</span>
+      <span><span class="dot t4"></span>Tier 4 — Fragile / interim humanitarian programs only</span>
+    </div>
+
+    <div class="controls">
+      <input id="search" type="text" placeholder="Search country or territory…">
+      <select id="tierFilter">
+        <option value="">All tiers</option>
+        <option value="1">Tier 1</option>
+        <option value="2">Tier 2</option>
+        <option value="3">Tier 3</option>
+        <option value="4">Tier 4</option>
+      </select>
+      <select id="regionFilter"><option value="">All regions</option></select>
+    </div>
+
+    <p class="count-line" id="countLine"></p>
+
+    <div id="table-wrap">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th data-key="name">Country / Territory</th>
+            <th data-key="region">Region</th>
+            <th data-key="tier">Tier</th>
+            <th data-key="pilot">Pilot Year</th>
+            <th data-key="rollout">Floor Rollout</th>
+            <th data-key="funding">Primary Funding Mix</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="activities">
+  <div class="wrap">
+    <span class="eyebrow">Human Activity Layer</span>
+    <h2 class="section-title">What 6 billion people actually do</h2>
+    <p class="section-lede">With automation handling heavy production, the ~20–25 hr/week human contribution
+    shifts toward care, ecology, education, and local production — the activities that don't disappear when
+    factories run themselves.</p>
+
+    <div class="reality" style="margin-bottom:36px;">
+      <h4>Reconciling this with the rent terms already set</h4>
+      <p>This activity model pays a flat <b>$6,833/year ($131.41/week)</b> per person — the original pre-rent
+      full-wage figure from the very first version of this model. It hasn't yet been adjusted for the 10%
+      Delper rent + veto terms set earlier, which pushed the realistic per-person dividend toward
+      <b>$350–500/year</b> unless gross output scales up by ~20–25% to cover rent. Two ways to reconcile this:
+      either (a) treat the $6,833 figure as the target and require Delper's rent to come out of a larger gross
+      pool so members still net that amount, or (b) keep gross output at $41T and accept the lower ~$350–500
+      floor, with the wage-equivalent activities below paying more like $560–670/year rather than $6,833. Worth
+      deciding explicitly before this goes further, since it changes what "20 hours/week" is actually worth.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar"><span class="pct">30%</span><h4>Care Economy &amp; Well-being</h4><p>Childcare, eldercare, mental health support, counseling, community-building.</p></div>
+      <div class="pillar"><span class="pct">25%</span><h4>Ecological Regeneration</h4><p>Reforestation, urban farming, ocean cleanup, local renewable energy management.</p></div>
+      <div class="pillar"><span class="pct">20%</span><h4>Lifelong Education &amp; Arts</h4><p>Teaching, mentorship, research, philosophy, writing, community arts.</p></div>
+      <div class="pillar"><span class="pct">15%</span><h4>Localized Direct Production</h4><p>Craftsmanship, boutique manufacturing, 3D printing management, automation upkeep.</p></div>
+      <div class="pillar"><span class="pct">10%</span><h4>Civic Logistics &amp; Mediation</h4><p>Community resource management, dispute mediation, neighborhood logistics.</p></div>
+    </div>
+
+    <div class="region-strategy">
+      <div class="rstrat">
+        <span class="eyebrow">Tier 1–2 economies</span>
+        <h4>US, Germany, Japan, South Korea</h4>
+        <p>Heavy weighting toward education, arts, and mental-health sectors as corporate and factory labor
+        winds down into research, psychological support, and cultural development.</p>
+      </div>
+      <div class="rstrat">
+        <span class="eyebrow">Rapidly developing economies</span>
+        <h4>India, Brazil, Indonesia</h4>
+        <p>Weighted toward ecological regeneration and care infrastructure — decentralized green grids,
+        localized agriculture, clean water, primary healthcare networks.</p>
+      </div>
+      <div class="rstrat">
+        <span class="eyebrow">Tier 3–4 / recovering regions</span>
+        <h4>Sub-Saharan Africa, Central Asia</h4>
+        <p>Weighted toward localized direct production and civic logistics — factory-direct local supply
+        chains, basic housing, communal food security systems.</p>
+      </div>
+    </div>
+
+    <span class="eyebrow">Rollout</span>
+    <h2 class="section-title" style="font-size:28px; margin-bottom:24px;">Three-phase transition, 10 years</h2>
+    <div class="phases">
+      <div class="phase">
+        <span class="yrs">Years 1–3 · Foundation &amp; De-escalation</span>
+        <h4>Stabilize before restructuring</h4>
+        <p><b>Action:</b> launch direct-to-consumer delivery infrastructure.</p>
+        <p><b>Activity:</b> shift ~1B underemployed/displaced workers into environmental cleanup and community care.</p>
+        <p><b>Goal:</b> establish food, shelter, and medical security to lower survival stress before asking
+        people to change how they work.</p>
+      </div>
+      <div class="phase">
+        <span class="yrs">Years 4–7 · Mass Automation &amp; Upskilling</span>
+        <h4>Automate the heavy lifting, retrain in parallel</h4>
+        <p><b>Action:</b> automate up to 70% of heavy industrial manufacturing, shipping, and routine data processing.</p>
+        <p><b>Activity:</b> enroll ~3B people in peer-to-peer education — psychology, ecology, sustainable farming, mediation.</p>
+        <p><b>Goal:</b> move the workforce out of competitive survival labor before the dividend layer is asked to fully replace it.</p>
+      </div>
+      <div class="phase">
+        <span class="yrs">Years 8–10 · Steady-State Peace Economy</span>
+        <h4>Full integration into the loop</h4>
+        <p><b>Action:</b> full 6B-person integration into the ~20 hr/week loop across the five pillars above.</p>
+        <p><b>Goal:</b> a self-sustaining cycle where automated abundance directly finances human-centric livelihoods
+        — contingent on the rent/dividend math above actually closing at this point.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <span class="eyebrow">Wage Layer, Reconsidered</span>
+    <h2 class="section-title">$29T isn't flat — it's a ladder</h2>
+    <p class="section-lede">The wage layer was treated as one average ($7,250–9,700/person) up to now. In practice
+    it's earned unevenly across a skill ladder, and people move up that ladder through the Lifelong Education &amp;
+    Arts pillar (20% of weekly hours, from the activity model above) and the Phase 2 upskilling push (3B people
+    enrolled in peer-to-peer education, years 4–7 of the rollout timeline).</p>
+
+    <div class="skill-ladder">
+      <div class="skill-rung">
+        <div class="rung-head"><h4>Foundational</h4><span class="wage">$3,766/yr</span></div>
+        <p class="meta">0.6x unit wage · ~880M workers (25%) · entry point for new/displaced workers</p>
+      </div>
+      <div class="skill-rung">
+        <div class="rung-head"><h4>Skilled</h4><span class="wage">$6,277/yr</span></div>
+        <p class="meta">1.0x unit wage · ~1.4B workers (40%) · care economy, ecological regen, standard production roles · ~2 yrs from Foundational</p>
+      </div>
+      <div class="skill-rung">
+        <div class="rung-head"><h4>Specialized</h4><span class="wage">$11,299/yr</span></div>
+        <p class="meta">1.8x unit wage · ~880M workers (25%) · healthcare, engineering, skilled trades, teaching · ~4 yrs from Skilled</p>
+      </div>
+      <div class="skill-rung">
+        <div class="rung-head"><h4>Expert / Research</h4><span class="wage">$20,087/yr</span></div>
+        <p class="meta">3.2x unit wage · ~350M workers (10%) · senior research, medicine, systems architecture · ~6 yrs from Specialized</p>
+      </div>
+    </div>
+
+    <div class="career-sim">
+      <h4>Career simulator — years in the workforce</h4>
+      <div class="calc-control">
+        <label for="careerYears">Years worked <span id="careerYearsVal">0</span></label>
+        <input type="range" id="careerYears" min="0" max="20" step="1" value="0">
+      </div>
+      <div class="career-track" id="careerTrack"></div>
+      <div class="career-results">
+        <div class="career-result"><span class="clabel">Current tier</span><span class="cvalue" id="careerTier">Foundational</span></div>
+        <div class="career-result"><span class="clabel">Current wage</span><span class="cvalue" id="careerWage">$3,766/yr</span></div>
+        <div class="career-result"><span class="clabel">Years to next tier</span><span class="cvalue" id="careerNext">2 yrs</span></div>
+      </div>
+    </div>
+
+    <div class="reality" style="margin-top:0;">
+      <h4>What this changes about the wage figures used earlier</h4>
+      <p>The $7,250–9,700 average was never wrong, but it hid a 5.3x spread — a new worker earns $3,766 while an
+      expert earns $20,087 from the same $29T pool. This matters for the reverse-solver and recovery simulator
+      above: those tools still use the flat $29T total (unaffected), but if the goal is judging whether the model
+      is fair rather than just whether it balances, the ladder is the more honest number to look at. It also gives
+      the model an actual incentive structure — "improve your skills to earn more" wasn't previously represented
+      anywhere in the math, just asserted in the activity pillars.</p>
+    </div>
+  </div>
+</section>
+
+<section id="gcl">
+  <div class="wrap">
+    <span class="eyebrow">Coordination Layer</span>
+    <h2 class="section-title">The Global Commons Ledger</h2>
+    <p class="section-lede">A decentralized, open-source coordination platform — a utility, not a corporate
+    platform — that matches people to tasks, verifies work peer-to-peer, and triggers dividend payouts. Sits
+    between the cooperative (which owes Delper rent) and the 6 billion members who need to see their hours and
+    payout clearly.</p>
+
+    <div class="gcl-layers">
+      <div class="gcl-layer">
+        <span class="num">01 · Identity Layer</span>
+        <h4>Skills &amp; Desires Registry</h4>
+        <p>Privacy-first profiles using decentralized identifiers (DIDs) — users control their own data rather
+        than a central server owning it.</p>
+      </div>
+      <div class="gcl-layer">
+        <span class="num">02 · Matching Layer</span>
+        <h4>Local Needs Matrix</h4>
+        <p>Communities log needs directly ("10 people for river cleanup Saturday"); an algorithm matches by
+        proximity and interest — no top-down manager assigning jobs.</p>
+      </div>
+      <div class="gcl-layer">
+        <span class="num">03 · Verification Layer</span>
+        <h4>Verification Consensus Protocol</h4>
+        <p>Peer-to-peer check-ins (QR scans, digital sign-off from care recipients) confirm activity without
+        invasive surveillance.</p>
+      </div>
+      <div class="gcl-layer">
+        <span class="num">04 · Payout Layer</span>
+        <h4>Dividend Oracle</h4>
+        <p>Once verified, the system releases that member's weekly share of the dividend/wage pool directly to
+        their wallet.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-mock">
+      <div class="dline"><span>Active Track</span><span>Ecological Regeneration · Trees Planted: 14</span></div>
+      <div class="dline"><span>Weekly Contribution</span><span>12 / 20 hrs<span class="bar"></span></span></div>
+      <div class="dline"><span>Next Block</span><span>Tomorrow 08:00 · Community Kitchen Help</span></div>
+      <div class="dline"><span>Available Balance</span><span>see reconciliation note above — $131.41 (pre-rent) vs. ~$11–13 (post-rent) per week</span></div>
+    </div>
+
+    <span class="eyebrow">Guardrails</span>
+    <h2 class="section-title" style="font-size:22px; margin-bottom:20px;">Preventing systemic vulnerabilities at 6B scale</h2>
+    <div class="guardrails">
+      <div class="guard"><h4>No gamification</h4><p>No likes, rankings, or leaderboards — these trigger stress and algorithmic manipulation. Work stays a utility, not a game.</p></div>
+      <div class="guard"><h4>Minimal data retention</h4><p>Precise geolocation is deleted immediately after verification; only anonymized macro-data persists (e.g. "12 people worked Sector 4 today").</p></div>
+      <div class="guard"><h4>Zero-penalty opt-out</h4><p>Users can reject any algorithm-suggested task with no penalty — the system learns preference, it doesn't enforce assignment.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>This is a modeling exercise, not a proposal with institutional backing. The $41T global wage/dividend
+    target, the tier assignments, and the attention-income ceiling are illustrative figures meant to show how
+    the pieces would need to fit together — real implementation would require multilateral tax treaties, new
+    international institutions, and national-level infrastructure that mostly don't exist yet.</p>
+    <p>One structural point now baked into the numbers above: with Delper setting a flat 10%/year rent and
+    holding veto over the cooperative, the rate isn't negotiable by the membership — it's set by the party
+    collecting it. That's not disqualifying on its own (landlord/tenant infrastructure deals work this way all
+    the time), but it does mean the $2,000/person dividend figure used earlier in this model is optimistic; the
+    rent math above suggests the real net figure lands closer to $350–500/person unless output scales up to
+    cover the rent or the rate is renegotiated.</p>
+    <p class="caveat">Sources for orders of magnitude: global ad spend figures are commonly-cited industry
+    estimates (WARC / GroupM / Zenith range, ~$1T total, ~$700B digital, as of recent years) rather than a single
+    verified figure — treat them as approximate. Country tier assignments are heuristic groupings for this model
+    only and should not be read as an official readiness ranking of any country.</p>
+  </div>
+</footer>
+
+<script>
+const T1=[["Norway","Europe"],["Sweden","Europe"],["Denmark","Europe"],["Finland","Europe"],["Iceland","Europe"],
+["Netherlands","Europe"],["Switzerland","Europe"],["Ireland","Europe"],["Luxembourg","Europe"],["Germany","Europe"],
+["Canada","Americas"],["Australia","Oceania"],["New Zealand","Oceania"],["Singapore","Asia"],["South Korea","Asia"],
+["Japan","Asia"],["United Arab Emirates","Middle East"],["Qatar","Middle East"]];
+
+const T2=[["United Kingdom","Europe"],["France","Europe"],["Italy","Europe"],["Spain","Europe"],["Portugal","Europe"],
+["Belgium","Europe"],["Austria","Europe"],["Estonia","Europe"],["Lithuania","Europe"],["Latvia","Europe"],
+["Czechia","Europe"],["Poland","Europe"],["Slovenia","Europe"],["Slovakia","Europe"],["Malta","Europe"],
+["Cyprus","Europe"],["Greece","Europe"],["Croatia","Europe"],["Romania","Europe"],["Bulgaria","Europe"],
+["Hungary","Europe"],["Israel","Middle East"],["Saudi Arabia","Middle East"],["Kuwait","Middle East"],
+["Bahrain","Middle East"],["Oman","Middle East"],["Chile","Americas"],["Uruguay","Americas"],["Costa Rica","Americas"],
+["Panama","Americas"],["Mexico","Americas"],["Brazil","Americas"],["Argentina","Americas"],["Colombia","Americas"],
+["Peru","Americas"],["Ecuador","Americas"],["Malaysia","Asia"],["Thailand","Asia"],["China","Asia"],["Vietnam","Asia"],
+["Indonesia","Asia"],["India","Asia"],["Philippines","Asia"],["Kenya","Africa"],["Rwanda","Africa"],["Ghana","Africa"],
+["Morocco","Africa"],["Tunisia","Africa"],["South Africa","Africa"],["Botswana","Africa"],["Mauritius","Africa"],
+["Turkey","Europe"],["Georgia","Asia"],["Armenia","Asia"],["Serbia","Europe"],["Jordan","Middle East"]];
+
+const T4=[["Afghanistan","Asia"],["Yemen","Middle East"],["Syria","Middle East"],["Somalia","Africa"],
+["South Sudan","Africa"],["Sudan","Africa"],["Libya","Africa"],["Iraq","Middle East"],["Haiti","Americas"],
+["Venezuela","Americas"],["Central African Republic","Africa"],["Mali","Africa"],["Burkina Faso","Africa"],
+["Eritrea","Africa"],["North Korea","Asia"],["Myanmar","Asia"],["DR Congo","Africa"],["Niger","Africa"],
+["Chad","Africa"],["Guinea-Bissau","Africa"],["Lebanon","Middle East"],["Ukraine","Europe"],["Palestine","Middle East"],
+["Western Sahara","Africa"],["Zimbabwe","Africa"],["Burundi","Africa"],["Guinea","Africa"],["Sierra Leone","Africa"],
+["Liberia","Africa"],["Papua New Guinea","Oceania"]];
+
+const T3=[
+["Nigeria","Africa"],["Egypt","Africa"],["Ethiopia","Africa"],["Tanzania","Africa"],["Uganda","Africa"],
+["Zambia","Africa"],["Mozambique","Africa"],["Senegal","Africa"],["Ivory Coast","Africa"],["Cameroon","Africa"],
+["Angola","Africa"],["Algeria","Africa"],["Namibia","Africa"],["Gabon","Africa"],["Congo Republic","Africa"],
+["Equatorial Guinea","Africa"],["Sao Tome and Principe","Africa"],["Cabo Verde","Africa"],["Seychelles","Africa"],
+["Comoros","Africa"],["Madagascar","Africa"],["Malawi","Africa"],["Lesotho","Africa"],["Eswatini","Africa"],
+["Togo","Africa"],["Benin","Africa"],["Gambia","Africa"],["Mauritania","Africa"],["Djibouti","Africa"],
+["Pakistan","Asia"],["Bangladesh","Asia"],["Sri Lanka","Asia"],["Nepal","Asia"],["Cambodia","Asia"],["Laos","Asia"],
+["Mongolia","Asia"],["Kazakhstan","Asia"],["Uzbekistan","Asia"],["Turkmenistan","Asia"],["Kyrgyzstan","Asia"],
+["Tajikistan","Asia"],["Azerbaijan","Asia"],["Bhutan","Asia"],["Maldives","Asia"],["Brunei","Asia"],
+["Timor-Leste","Asia"],["Iran","Middle East"],
+["Belarus","Europe"],["Moldova","Europe"],["Albania","Europe"],["North Macedonia","Europe"],
+["Bosnia and Herzegovina","Europe"],["Montenegro","Europe"],["Kosovo","Europe"],["San Marino","Europe"],
+["Monaco","Europe"],["Andorra","Europe"],["Liechtenstein","Europe"],["Vatican City","Europe"],
+["Guatemala","Americas"],["Honduras","Americas"],["El Salvador","Americas"],["Nicaragua","Americas"],
+["Belize","Americas"],["Jamaica","Americas"],["Trinidad and Tobago","Americas"],["Bahamas","Americas"],
+["Barbados","Americas"],["Dominican Republic","Americas"],["Cuba","Americas"],["Bolivia","Americas"],
+["Paraguay","Americas"],["Guyana","Americas"],["Suriname","Americas"],["Puerto Rico","Americas"],
+["Greenland","Americas"],["Bermuda","Americas"],["Cayman Islands","Americas"],["Aruba","Americas"],
+["Curacao","Americas"],["Antigua and Barbuda","Americas"],["Saint Lucia","Americas"],
+["Saint Vincent and the Grenadines","Americas"],["Grenada","Americas"],["Dominica","Americas"],
+["Saint Kitts and Nevis","Americas"],["Falkland Islands","Americas"],["French Guiana","Americas"],
+["Martinique","Americas"],["Guadeloupe","Americas"],["Saint Martin","Americas"],
+["Fiji","Oceania"],["Solomon Islands","Oceania"],["Vanuatu","Oceania"],["Samoa","Oceania"],["Tonga","Oceania"],
+["Kiribati","Oceania"],["Tuvalu","Oceania"],["Micronesia","Oceania"],["Marshall Islands","Oceania"],
+["Palau","Oceania"],["Nauru","Oceania"],["Cook Islands","Oceania"],["Niue","Oceania"],["American Samoa","Oceania"],
+["Guam","Oceania"],["Northern Mariana Islands","Oceania"],["French Polynesia","Oceania"],["New Caledonia","Oceania"],
+["Wallis and Futuna","Oceania"],["Tokelau","Oceania"],["Christmas Island","Oceania"],["Cocos Islands","Oceania"],
+["Norfolk Island","Oceania"],
+["Hong Kong","Asia"],["Macau","Asia"],["Taiwan","Asia"],["Gibraltar","Europe"],["Isle of Man","Europe"],
+["Jersey","Europe"],["Guernsey","Europe"],["Faroe Islands","Europe"],["Åland Islands","Europe"],
+["Réunion","Africa"],["Mayotte","Africa"],
+["US Virgin Islands","Americas"],["British Virgin Islands","Americas"],["Anguilla","Americas"],
+["Montserrat","Americas"],["Turks and Caicos","Americas"]
+];
+
+const tierMeta = {
+  1:{pilot:2027, rollout:2030, funding:"Automation dividend + wages"},
+  2:{pilot:2030, rollout:2035, funding:"Dividend + wages, attention layer bootstraps digital ID"},
+  3:{pilot:2036, rollout:2043, funding:"Attention income first, then dividend as infra matures"},
+  4:{pilot:"—", rollout:"Unscheduled", funding:"Interim humanitarian-agency administered only"}
+};
+
+function build(list, tier){
+  return list.map(([name,region])=>({
+    name, region, tier,
+    pilot: tierMeta[tier].pilot,
+    rollout: tierMeta[tier].rollout,
+    funding: tierMeta[tier].funding
+  }));
+}
+
+const DATA = [...build(T1,1), ...build(T2,2), ...build(T3,3), ...build(T4,4)];
+
+const tbody = document.getElementById('tableBody');
+const regionFilter = document.getElementById('regionFilter');
+const tierFilter = document.getElementById('tierFilter');
+const searchInput = document.getElementById('search');
+const countLine = document.getElementById('countLine');
+
+const regions = [...new Set(DATA.map(d=>d.region))].sort();
+regions.forEach(r=>{
+  const opt = document.createElement('option');
+  opt.value = r; opt.textContent = r;
+  regionFilter.appendChild(opt);
+});
+
+let sortKey = 'tier', sortDir = 1;
+
+function render(){
+  const q = searchInput.value.trim().toLowerCase();
+  const t = tierFilter.value;
+  const reg = regionFilter.value;
+
+  let rows = DATA.filter(d=>{
+    if(q && !d.name.toLowerCase().includes(q)) return false;
+    if(t && String(d.tier)!==t) return false;
+    if(reg && d.region!==reg) return false;
+    return true;
+  });
+
+  rows.sort((a,b)=>{
+    let av=a[sortKey], bv=b[sortKey];
+    if(typeof av === 'string') av = av.toLowerCase();
+    if(typeof bv === 'string') bv = bv.toLowerCase();
+    if(av<bv) return -1*sortDir;
+    if(av>bv) return 1*sortDir;
+    return a.name.localeCompare(b.name);
+  });
+
+  countLine.textContent = `Showing ${rows.length} of ${DATA.length} countries & territories`;
+
+  tbody.innerHTML = rows.map(d=>`
+    <tr>
+      <td>${d.name}</td>
+      <td class="region-tag">${d.region}</td>
+      <td><span class="tier-badge t${d.tier}"><span class="dot"></span>Tier ${d.tier}</span></td>
+      <td>${d.pilot}</td>
+      <td>${d.rollout}</td>
+      <td class="region-tag">${d.funding}</td>
+    </tr>
+  `).join('');
+}
+
+document.querySelectorAll('#dataTable thead th').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const key = th.dataset.key;
+    if(sortKey===key){ sortDir*=-1; } else { sortKey=key; sortDir=1; }
+    render();
+  });
+});
+
+searchInput.addEventListener('input', render);
+tierFilter.addEventListener('change', render);
+regionFilter.addEventListener('change', render);
+
+render();
+
+// ---- LIVE CALCULATOR ----
+const POPULATION = 6e9;
+const WAGE_TARGET = 29; // $T, fixed per model
+
+const rentRate = document.getElementById('rentRate');
+const infraVal = document.getElementById('infraVal');
+const grossOut = document.getElementById('grossOut');
+const attnLayer = document.getElementById('attnLayer');
+const ubsBasket = document.getElementById('ubsBasket');
+
+const rentRateVal = document.getElementById('rentRateVal');
+const infraValVal = document.getElementById('infraValVal');
+const grossOutVal = document.getElementById('grossOutVal');
+const attnLayerVal = document.getElementById('attnLayerVal');
+const ubsBasketVal = document.getElementById('ubsBasketVal');
+
+const ubsOwedEl = document.getElementById('ubsOwed');
+const rentOwedEl = document.getElementById('rentOwed');
+const netPoolEl = document.getElementById('netPool');
+const wageLayerEl = document.getElementById('wageLayer');
+const dividendLayerEl = document.getElementById('dividendLayer');
+const perPersonEl = document.getElementById('perPerson');
+const recoverYrsEl = document.getElementById('recoverYrs');
+
+function fmtT(v){ return '$' + v.toFixed(1).replace(/\.0$/,'') + 'T'; }
+
+function calc(){
+  const rr = parseFloat(rentRate.value);      // %
+  const iv = parseFloat(infraVal.value);      // $T
+  const go = parseFloat(grossOut.value);      // $T
+  const al = parseFloat(attnLayer.value);     // $T
+  const ubsPP = parseFloat(ubsBasket.value);  // $/person/year
+
+  rentRateVal.textContent = rr + '%';
+  infraValVal.textContent = '$' + iv + 'T';
+  grossOutVal.textContent = fmtT(go);
+  attnLayerVal.textContent = fmtT(al);
+  ubsBasketVal.textContent = '$' + ubsPP.toLocaleString();
+
+  const ubsTotal = (ubsPP * POPULATION) / 1e12; // $T, off the top, guaranteed
+  const rentOwed = iv * (rr/100);
+  const poolAfterUBS = go - ubsTotal;
+  const netPool = poolAfterUBS - rentOwed;
+  const dividendLayer = netPool - WAGE_TARGET + al;
+  const perPerson = (dividendLayer * 1e12) / POPULATION;
+  const recoverYrs = rr > 0 ? (100/rr) : Infinity;
+
+  ubsOwedEl.textContent = fmtT(ubsTotal);
+  rentOwedEl.textContent = fmtT(rentOwed);
+  netPoolEl.textContent = fmtT(netPool);
+  wageLayerEl.textContent = fmtT(WAGE_TARGET);
+  dividendLayerEl.textContent = (dividendLayer < 0 ? '-' : '') + fmtT(Math.abs(dividendLayer));
+  dividendLayerEl.style.color = dividendLayer < 0 ? '#E08B7D' : '#7FD8B8';
+
+  if(perPerson < 0){
+    perPersonEl.textContent = '-$' + Math.abs(perPerson).toFixed(0) + '/yr (shortfall)';
+    perPersonEl.style.color = '#E08B7D';
+  } else {
+    perPersonEl.textContent = '$' + perPerson.toFixed(0) + '/yr';
+    perPersonEl.style.color = '#F2C879';
+  }
+  recoverYrsEl.textContent = isFinite(recoverYrs) ? recoverYrs.toFixed(1) + ' yrs' : '∞';
+
+  // Live threshold: UBS per-person level where opSurplus hits zero (rent becomes permanently unpayable)
+  const opSurplusZeroAt = go - WAGE_TARGET + al; // $T
+  const ubsThresholdPP = (opSurplusZeroAt * 1e12) / POPULATION;
+  const thresholdNote = document.getElementById('ubsThresholdNote');
+  if(thresholdNote){
+    if(ubsPP >= ubsThresholdPP){
+      thresholdNote.textContent = `⚠ At $${ubsPP.toLocaleString()}/person, the basket alone exceeds what's left after wages — rent becomes permanently unpayable at these output/wage settings (threshold: $${ubsThresholdPP.toFixed(0)}/person).`;
+      thresholdNote.style.color = '#E08B7D';
+    } else {
+      thresholdNote.textContent = `Threshold at current output/wage settings: rent becomes permanently unpayable above $${ubsThresholdPP.toFixed(0)}/person/year — you're $${(ubsThresholdPP-ubsPP).toFixed(0)} below that line.`;
+      thresholdNote.style.color = '#9AAABF';
+    }
+  }
+}
+
+[rentRate, infraVal, grossOut, attnLayer, ubsBasket].forEach(el => el.addEventListener('input', calc));
+calc();
+
+// ---- REVERSE SOLVER ----
+const targetDiv = document.getElementById('targetDiv');
+const targetDivVal = document.getElementById('targetDivVal');
+const solverLabel = document.getElementById('solverLabel');
+const solverValue = document.getElementById('solverValue');
+const solverHeld = document.getElementById('solverHeld');
+const solverNote = document.getElementById('solverNote');
+const solveBtns = document.querySelectorAll('.solve-btn');
+let solveMode = 'rent';
+
+solveBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    solveBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    solveMode = btn.dataset.mode;
+    solve();
+  });
+});
+
+function solve(){
+  const target = parseFloat(targetDiv.value);
+  targetDivVal.textContent = '$' + target.toLocaleString();
+
+  const iv = parseFloat(infraVal.value);   // $T
+  const go = parseFloat(grossOut.value);   // $T
+  const al = parseFloat(attnLayer.value);  // $T
+  const rr = parseFloat(rentRate.value);   // %
+  const ubsPP = parseFloat(ubsBasket.value);
+  const ubsTotal = (ubsPP * POPULATION) / 1e12;
+
+  const dividendLayerTarget = (target * 6e9) / 1e12; // $T
+
+  if(solveMode === 'rent'){
+    solverLabel.textContent = 'Required rent rate';
+    const requiredRent = 100 * (go - ubsTotal - WAGE_TARGET + al - dividendLayerTarget) / iv;
+    solverHeld.textContent = 'Output ' + fmtT(go) + ', UBS ' + fmtT(ubsTotal) + ', infra ' + fmtT(iv);
+    if(requiredRent < 0){
+      solverValue.textContent = 'infeasible';
+      solverValue.style.color = '#E08B7D';
+      solverNote.textContent = `Even 0% rent doesn't reach $${target.toLocaleString()}/person at ${fmtT(go)} output after the Layer 0 basket — output needs to rise first, or the basket needs to shrink.`;
+    } else {
+      solverValue.textContent = requiredRent.toFixed(1) + '%';
+      solverValue.style.color = requiredRent > 20 ? '#E08B7D' : '#F2C879';
+      solverNote.textContent = requiredRent > rr
+        ? `That's higher than the current ${rr}% slider setting — this target needs Delper to charge more, not less, at this output and basket size.`
+        : `Delper would need to accept ${requiredRent.toFixed(1)}% instead of the current ${rr}% — a concession of ${(rr-requiredRent).toFixed(1)} points — to hit this target without changing output or the basket.`;
+    }
+  } else {
+    solverLabel.textContent = 'Required gross output';
+    const requiredOutput = dividendLayerTarget + WAGE_TARGET - al + ubsTotal + (iv * rr/100);
+    solverHeld.textContent = 'Rent ' + rr + '%, UBS ' + fmtT(ubsTotal) + ', infra ' + fmtT(iv);
+    solverValue.textContent = fmtT(requiredOutput);
+    solverValue.style.color = requiredOutput > 55 ? '#E08B7D' : '#F2C879';
+    const pctIncrease = ((requiredOutput - 41) / 41 * 100).toFixed(0);
+    solverNote.textContent = `That's ${pctIncrease > 0 ? '+' : ''}${pctIncrease}% vs. the original $41T target, holding the ${rr}% rent rate and $${ubsPP}/person basket fixed. `+
+      (requiredOutput > 60 ? 'Beyond the "output roughly doubles" ceiling flagged earlier in this model — likely not physically realistic at current automation levels.' : 'Within the plausible range flagged earlier (output growing toward ~1.5x under full automation).');
+  }
+}
+
+[rentRate, infraVal, grossOut, attnLayer, ubsBasket, targetDiv].forEach(el => el.addEventListener('input', solve));
+solve();
+
+// ---- RECOVERY SIMULATOR ----
+const simRecoveredYear = document.getElementById('simRecoveredYear');
+const simDeferralYears = document.getElementById('simDeferralYears');
+const simTotalCollected = document.getElementById('simTotalCollected');
+const simSummaryNote = document.getElementById('simSummaryNote');
+const simTableBody = document.getElementById('simTableBody');
+const MAX_YEARS = 50;
+
+function runSimulation(){
+  const iv = parseFloat(infraVal.value);   // $T principal
+  const rr = parseFloat(rentRate.value);   // %
+  const go = parseFloat(grossOut.value);   // $T
+  const al = parseFloat(attnLayer.value);  // $T
+  const ubsPP = parseFloat(ubsBasket.value);
+  const ubsTotal = (ubsPP * POPULATION) / 1e12; // $T, delivered in-kind, off the top, always
+  const opSurplus = go - ubsTotal - WAGE_TARGET + al; // $T available for rent, after Layer 0 + wages
+  const annualRentDue = iv * (rr/100);
+
+  let deferredBalance = 0;
+  let cumulativeCollected = 0;
+  let recoveredYear = null;
+  let deferralYears = 0;
+  const rows = [];
+
+  for(let year=1; year<=MAX_YEARS; year++){
+    if(deferredBalance > 0){
+      deferredBalance *= (1 + rr/100); // interest compounds on carried-over unpaid rent
+    }
+    const totalDue = annualRentDue + deferredBalance;
+    let payment, dividendLayer;
+
+    if(opSurplus >= totalDue){
+      payment = totalDue;
+      deferredBalance = 0;
+      dividendLayer = opSurplus - totalDue;
+    } else {
+      payment = Math.max(opSurplus, 0);
+      deferredBalance = totalDue - payment;
+      dividendLayer = 0;
+      deferralYears++;
+    }
+
+    cumulativeCollected += payment;
+    const perPerson = (dividendLayer * 1e12) / POPULATION;
+
+    rows.push({year, totalDue, payment, deferredBalance, perPerson, cumulativeCollected});
+
+    if(recoveredYear === null && cumulativeCollected >= iv){
+      recoveredYear = year;
+      break;
+    }
+  }
+
+  return {rows, recoveredYear, deferralYears, iv, cumulativeCollected: rows.length ? rows[rows.length-1].cumulativeCollected : 0};
+}
+
+function renderSimulation(){
+  const result = runSimulation();
+
+  if(result.recoveredYear){
+    simRecoveredYear.textContent = 'Year ' + result.recoveredYear;
+    simRecoveredYear.style.color = '#7FD8B8';
+  } else {
+    simRecoveredYear.textContent = 'Not within 50 yrs';
+    simRecoveredYear.style.color = '#E08B7D';
+  }
+
+  simDeferralYears.textContent = result.deferralYears;
+  simDeferralYears.style.color = result.deferralYears > 0 ? '#F2C879' : '#7FD8B8';
+
+  const extra = result.cumulativeCollected - result.iv;
+  simTotalCollected.textContent = fmtT(result.cumulativeCollected);
+
+  if(result.recoveredYear && result.deferralYears === 0){
+    simSummaryNote.textContent = `No deferral years at this rent rate — the operating surplus covers rent every year, so recovery lands right at the simple ${(100/parseFloat(rentRate.value)).toFixed(1)}-year mark from the static calculator above.`;
+  } else if(result.recoveredYear && result.deferralYears > 0){
+    simSummaryNote.textContent = `${result.deferralYears} year(s) of deferred rent, compounding at the ${rentRate.value}% rate, pushed recovery to Year ${result.recoveredYear} — later than the simple ${(100/parseFloat(rentRate.value)).toFixed(1)}-year mark because deferred interest inflated what Delper is owed.`;
+  } else {
+    const iv2 = parseFloat(infraVal.value);
+    const go2 = parseFloat(grossOut.value);
+    const al2 = parseFloat(attnLayer.value);
+    const ubsPP2 = parseFloat(ubsBasket.value);
+    const opSurplus2 = go2 - ((ubsPP2*POPULATION)/1e12) - WAGE_TARGET + al2;
+    if(opSurplus2 <= 0){
+      simSummaryNote.textContent = `Permanently unpayable, not just slow: the Layer 0 basket + wages already consume the entire output before rent is even considered (operating surplus = ${fmtT(opSurplus2)}). Delper collects $0 every year — this isn't a 50-year problem, it never starts.`;
+    } else {
+      simSummaryNote.textContent = `At this rent rate, the operating surplus never covers a full year's rent — deferred balance compounds faster than it can be paid down. Delper's $${result.iv}T investment is not recovered within 50 years at these settings. Lower the rent rate, raise output, or shrink the basket to fix this.`;
+    }
+  }
+
+  simTableBody.innerHTML = result.rows.map(r => `
+    <tr>
+      <td style="padding:7px 10px; border-bottom:1px solid #2A3A4E;">${r.year}</td>
+      <td style="padding:7px 10px; border-bottom:1px solid #2A3A4E; color:#C9D3DE;">${fmtT(r.totalDue)}</td>
+      <td style="padding:7px 10px; border-bottom:1px solid #2A3A4E; color:#7FD8B8;">${fmtT(r.payment)}</td>
+      <td style="padding:7px 10px; border-bottom:1px solid #2A3A4E; color:${r.deferredBalance > 0 ? '#E08B7D' : '#9AAABF'};">${r.deferredBalance > 0 ? fmtT(r.deferredBalance) : '—'}</td>
+      <td style="padding:7px 10px; border-bottom:1px solid #2A3A4E; color:#F2C879;">$${r.perPerson.toFixed(0)}</td>
+      <td style="padding:7px 10px; border-bottom:1px solid #2A3A4E; color:#C9D3DE;">${fmtT(r.cumulativeCollected)}</td>
+    </tr>
+  `).join('');
+}
+
+[rentRate, infraVal, grossOut, attnLayer, ubsBasket].forEach(el => el.addEventListener('input', renderSimulation));
+renderSimulation();
+
+// ---- APPLY TIER-WEIGHTED BASKET ----
+function applyWeightedBasket(){
+  ubsBasket.value = 1747;
+  calc();
+  solve();
+  renderSimulation();
+  document.getElementById('calcBox').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ---- CAREER PROGRESSION SIMULATOR ----
+const SKILL_TIERS = [
+  { name:'Foundational',      wage:3766,  cumYears:0  },
+  { name:'Skilled',           wage:6277,  cumYears:2  },
+  { name:'Specialized',       wage:11299, cumYears:6  },
+  { name:'Expert / Research', wage:20087, cumYears:12 }
+];
+
+const careerYears = document.getElementById('careerYears');
+const careerYearsVal = document.getElementById('careerYearsVal');
+const careerTrack = document.getElementById('careerTrack');
+const careerTier = document.getElementById('careerTier');
+const careerWage = document.getElementById('careerWage');
+const careerNext = document.getElementById('careerNext');
+
+function renderCareer(){
+  const yrs = parseInt(careerYears.value);
+  careerYearsVal.textContent = yrs;
+
+  let tierIdx = 0;
+  for(let i=0; i<SKILL_TIERS.length; i++){
+    if(yrs >= SKILL_TIERS[i].cumYears) tierIdx = i;
+  }
+  const tier = SKILL_TIERS[tierIdx];
+  const nextTier = SKILL_TIERS[tierIdx+1];
+
+  careerTier.textContent = tier.name;
+  careerWage.textContent = '$' + tier.wage.toLocaleString() + '/yr';
+  careerNext.textContent = nextTier ? (nextTier.cumYears - yrs) + ' yrs' : 'At top tier';
+
+  careerTrack.innerHTML = SKILL_TIERS.map((t,i)=>{
+    let cls = 'seg';
+    if(i < tierIdx) cls += ' filled';
+    else if(i === tierIdx) cls += ' current';
+    return `<div class="${cls}" title="${t.name}"></div>`;
+  }).join('');
+}
+
+careerYears.addEventListener('input', renderCareer);
+renderCareer();
+</script>
+</body>
+</html>
